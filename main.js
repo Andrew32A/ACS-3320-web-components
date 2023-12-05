@@ -71,7 +71,7 @@ class HoverButton extends HTMLElement {
       "Okay okay",
       "I'll make it easier",
       "🍆",
-      "Uh oh",
+      "👀",
       "How about this?",
       "8========================D",
       "Hmm...",
@@ -167,6 +167,7 @@ class HoverButton extends HTMLElement {
   // main loop
   _handleMouseEnter() {
     if (this._currentTextIndex < this._textArray.length) {
+      this._disableHoverTemporarily();
       this._moveButtonRandomly();
       this._button.textContent = this._textArray[this._currentTextIndex];
       this._handleIndexCases();
@@ -198,6 +199,15 @@ class HoverButton extends HTMLElement {
 
   static get observedAttributes() {
     return [];
+  }
+
+  // disable hover for a short period of time
+  _disableHoverTemporarily() {
+    this._button.style.pointerEvents = "none";
+
+    setTimeout(() => {
+      this._button.style.pointerEvents = "auto";
+    }, 300);
   }
 
   // reset button
