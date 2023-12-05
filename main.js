@@ -3,7 +3,7 @@ const template = document.createElement("template");
 template.innerHTML = `
   <style>
     .hover-button {
-      background-color: #3498db;
+      background-color: #3496FF;
       color: #fff;
       padding: 10px 20px;
       border: none;
@@ -90,6 +90,10 @@ class HoverButton extends HTMLElement {
       "You're pretty good at this",
       "Here, you've earned this",
       "🍪",
+      "I hope you're having a good day :)",
+      "Remember...",
+      "Life often rewards those who...",
+      "keep trying and never give up",
       "",
     ];
 
@@ -121,7 +125,7 @@ class HoverButton extends HTMLElement {
       case 8: // eggplant
         this.enlargeButton();
         break;
-      case 9: // uh oh
+      case 9: // eyes
         this.resetButton();
         break;
       case 10: // how about this?
@@ -163,8 +167,17 @@ class HoverButton extends HTMLElement {
       case 24: // cookie
         this.enlargeButton();
         break;
-      case 25: // empty string
+      case 25: // i hope you're having a good day :)
         this.resetButton();
+        break;
+      case 26: // remember...
+        break;
+      case 27: // life often rewards those who...
+        break;
+      case 28: // keep searching and never give up
+        break;
+      case 29: //
+        break;
       default:
         break;
     }
@@ -263,7 +276,7 @@ class HoverButton extends HTMLElement {
       fakeButton.style.position = "absolute";
       fakeButton.style.left = `${Math.random() * window.innerWidth}px`;
       fakeButton.style.top = `${Math.random() * window.innerHeight}px`;
-      fakeButton.style.background = "#3498db";
+      fakeButton.style.background = "#3496FF"; // old: #3498db
       fakeButton.style.color = "#fff";
       fakeButton.style.border = "none";
       fakeButton.style.padding = "10px 20px";
