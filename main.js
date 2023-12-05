@@ -12,6 +12,9 @@ template.innerHTML = `
       border-radius: 5px;
       position: absolute;
       z-index: 9999;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
     }
 
     .transitions-enabled {
@@ -106,6 +109,7 @@ class HoverButton extends HTMLElement {
   _handleIndexCases() {
     switch (this._currentTextIndex) {
       case 0: // too slow
+        this.resetButton();
         this.enableTransition();
         break;
       case 1: // try again
@@ -236,6 +240,7 @@ class HoverButton extends HTMLElement {
     this._button.style.padding = "10px 20px";
     this._button.classList.remove("spinning");
     this._button.classList.remove("rainbow-text");
+    this._button.style.translate = "none";
   }
 
   // fun functions
