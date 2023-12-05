@@ -66,6 +66,10 @@ class HoverButton extends HTMLElement {
     this._shadowRoot.appendChild(tempNode);
 
     this._button = this._shadowRoot.querySelector(".hover-button");
+    this._completionTimeText = document.querySelector(".completion-time");
+    this._isGameOver = false;
+    this._startTime = Date.now();
+    this._endTime = 0;
     this._currentTextIndex = 0;
     this._textArray = [
       "Too slow",
@@ -97,6 +101,9 @@ class HoverButton extends HTMLElement {
       "Remember...",
       "Life often rewards those who...",
       "keep trying and never give up",
+      "Because maybe one day...",
+      "You'll finally...",
+      "Click me",
       "",
     ];
 
@@ -178,9 +185,15 @@ class HoverButton extends HTMLElement {
         break;
       case 27: // life often rewards those who...
         break;
-      case 28: // keep searching and never give up
+      case 28: // keep trying and never give up
         break;
-      case 29: //
+      case 29: // because maybe one day...
+        break;
+      case 30: // you'll finally...
+        break;
+      case 31: // click me
+        this.moveButtonToCenter();
+        this.endGame();
         break;
       default:
         break;
@@ -189,7 +202,7 @@ class HoverButton extends HTMLElement {
 
   // main loop
   _handleMouseEnter() {
-    if (this._currentTextIndex < this._textArray.length) {
+    if (this._currentTextIndex < this._textArray.length && !this._isGameOver) {
       this._disableHoverTemporarily();
       this._moveButtonRandomly();
       this._button.textContent = this._textArray[this._currentTextIndex];
@@ -199,6 +212,8 @@ class HoverButton extends HTMLElement {
       if (this._currentTextIndex === this._textArray.length) {
         this._button.classList.add("hidden");
       }
+    } else if (this._isGameOver) {
+      this._button.addEventListener("click", this._handleMouseClick.bind(this));
     }
 
     // debugging
@@ -206,6 +221,13 @@ class HoverButton extends HTMLElement {
       "Current Index:",
       this._currentTextIndex + " ----- Text: " + this._button.textContent
     );
+    console.log("time:", this._startTime + " " + this._endTime);
+  }
+
+  _handleMouseClick() {
+    this.fadeButtonOut();
+    this._endTime = Date.now();
+    this.displayCompletionTime();
   }
 
   // random movement
@@ -298,6 +320,36 @@ class HoverButton extends HTMLElement {
     this._shadowRoot
       .querySelectorAll(".fake-button")
       .forEach((btn) => btn.remove());
+  }
+
+  // end game functions
+  moveButtonToCenter() {
+    this._button.style.position = "absolute";
+    this._button.style.left = "50%";
+    this._button.style.top = "50%";
+    this._button.style.transform = "translate(-50%, -50%)";
+  }
+
+  fadeButtonOut() {
+    this._button.style.opacity = "0";
+  }
+
+  endGame() {
+    this._isGameOver = true;
+  }
+
+  displayCompletionTime() {
+    setTimeout(() => {
+      const timeDiff = this._endTime - this._startTime;
+      const seconds = Math.floor(timeDiff / 1000);
+      const milliseconds = timeDiff % 1000;
+      const formattedMilliseconds = milliseconds.toString().padStart(2, "0");
+      const completionTime = `It took you ${seconds}.${formattedMilliseconds} seconds to click a button`;
+
+      this._completionTimeText.innerHTML = completionTime;
+      this._completionTimeText.classList.add("completion-time-revealed");
+      this._completionTimeText.classList.remove("completion-time-hidden");
+    }, 600);
   }
 
   // boring functions
