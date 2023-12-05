@@ -8,11 +8,14 @@ template.innerHTML = `
       padding: 10px 20px;
       border: none;
       cursor: pointer;
-      transition: all 0.3s ease;
       font-size: 18px;
       border-radius: 5px;
       position: absolute;
       z-index: 9999;
+    }
+
+    .transitions-enabled {
+      transition: all 0.3s ease;
     }
 
     .hover-button.clicked {
@@ -99,6 +102,7 @@ class HoverButton extends HTMLElement {
   _handleIndexCases() {
     switch (this._currentTextIndex) {
       case 0: // too slow
+        this.enableTransition();
         break;
       case 1: // try again
         break;
@@ -147,6 +151,7 @@ class HoverButton extends HTMLElement {
         this.fillScreenWithFakeButtons();
         break;
       case 20: // wow, you found me!
+        this.enableTransition();
         this.removeAllFakeButtons();
         break;
       case 21: // i'm impressed
@@ -218,7 +223,6 @@ class HoverButton extends HTMLElement {
     this._button.style.padding = "10px 20px";
     this._button.classList.remove("spinning");
     this._button.classList.remove("rainbow-text");
-    this._button.style.transition = "all 0.3s ease;";
   }
 
   // fun functions
@@ -237,7 +241,11 @@ class HoverButton extends HTMLElement {
   }
 
   disableTransition() {
-    this._button.style.transition = "none";
+    this._button.classList.remove("transitions-enabled");
+  }
+
+  enableTransition() {
+    this._button.classList.add("transitions-enabled");
   }
 
   fillScreenWithFakeButtons() {
