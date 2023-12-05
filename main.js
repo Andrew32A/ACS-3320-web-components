@@ -79,9 +79,9 @@ class HoverButton extends HTMLElement {
       "Wanna hear a joke instead?",
       "What's the difference between a snowman and a snowwoman?",
       "Snowballs",
-      "Hmm...",
+      "Actually...",
       "Let's play a game of hide and seek!!",
-      "Click me",
+      "*CLICK ME*",
       "Wow, you found me!",
       "I'm impressed",
       "You're pretty good at this",
@@ -137,12 +137,13 @@ class HoverButton extends HTMLElement {
       case 16: // snowballs
         this.startRainbowEffect();
         break;
-      case 17: // hmm...
+      case 17: // actually...
         this.resetButton();
         break;
       case 18: // let's play a game of hide and seek!!
         break;
-      case 19: // click me
+      case 19: // *click me*
+        this.disableTransition();
         this.fillScreenWithFakeButtons();
         break;
       case 20: // wow, you found me!
@@ -217,6 +218,7 @@ class HoverButton extends HTMLElement {
     this._button.style.padding = "10px 20px";
     this._button.classList.remove("spinning");
     this._button.classList.remove("rainbow-text");
+    this._button.style.transition = "all 0.3s ease;";
   }
 
   // fun functions
@@ -232,6 +234,10 @@ class HoverButton extends HTMLElement {
 
   startRainbowEffect() {
     this._button.classList.add("rainbow-text");
+  }
+
+  disableTransition() {
+    this._button.style.transition = "none";
   }
 
   fillScreenWithFakeButtons() {
