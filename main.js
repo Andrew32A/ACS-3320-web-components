@@ -14,11 +14,6 @@ template.innerHTML = `
       position: absolute;
     }
 
-    .hover-button:hover {
-      background-color: #e74c3c;
-      transition: all 0.3s ease;
-    }
-
     .hover-button.clicked {
       background-color: #f1c40f;
       transition: all 0.3s ease;
@@ -26,6 +21,15 @@ template.innerHTML = `
 
     .hover-button.hidden {
       display: none;
+    }
+
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .spinning {
+      animation: spin 1s linear infinite;
     }
   </style>
   <button class="hover-button">Click me</button>
@@ -53,7 +57,7 @@ class HoverButton extends HTMLElement {
       "🍆",
       "Uh oh",
       "How about this?",
-      "🍆🍆🍆🍆🍆🍆",
+      "8========================D",
       "",
     ];
 
@@ -85,10 +89,15 @@ class HoverButton extends HTMLElement {
         this.enlargeButton();
         break;
       case 9:
-        this.resetButtonSize();
+        this.resetButton();
         break;
       case 10:
         break;
+      case 11:
+        this.startSpinning();
+        break;
+      case 12:
+        this.resetButton();
       default:
         break;
     }
@@ -128,16 +137,21 @@ class HoverButton extends HTMLElement {
     return [];
   }
 
+  resetButton() {
+    this._button.style.transform = "scale(1)";
+    this._button.style.fontSize = "18px";
+    this._button.style.padding = "10px 20px";
+    this._button.classList.remove("spinning");
+  }
+
   enlargeButton() {
     this._button.style.transform = "scale(2.5)";
     this._button.style.fontSize = "44px";
     this._button.style.padding = "15px 25px";
   }
 
-  resetButtonSize() {
-    this._button.style.transform = "scale(1)";
-    this._button.style.fontSize = "18px";
-    this._button.style.padding = "10px 20px";
+  startSpinning() {
+    this._button.classList.add("spinning");
   }
 
   attributeChangedCallback(name, oldValue, newValue) {}
