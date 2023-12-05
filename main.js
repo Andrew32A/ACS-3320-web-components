@@ -78,6 +78,14 @@ class HoverButton extends HTMLElement {
       "Wanna hear a joke instead?",
       "What's the difference between a snowman and a snowwoman?",
       "Snowballs",
+      "Hmm...",
+      "Let's play a game of hide and seek!!",
+      "Click me",
+      "Wow, you found me!",
+      "I'm impressed",
+      "You're pretty good at this",
+      "Here, you've earned this",
+      "🍪",
       "",
     ];
 
@@ -128,13 +136,34 @@ class HoverButton extends HTMLElement {
       case 16: // snowballs
         this.startRainbowEffect();
         break;
-      case 17: //
+      case 17: // hmm...
+        this.resetButton();
+        break;
+      case 18: // let's play a game of hide and seek!!
+        break;
+      case 19: // click me
+        this.fillScreenWithFakeButtons();
+        break;
+      case 20: // wow, you found me!
+        this.removeAllFakeButtons();
+        break;
+      case 21: // i'm impressed
+        break;
+      case 22: // you're pretty good at this
+        break;
+      case 23: // here, you've earned this
+        break;
+      case 24: // cookie
+        this.enlargeButton();
+        break;
+      case 25: // empty string
         this.resetButton();
       default:
         break;
     }
   }
 
+  // main loop
   _handleMouseEnter() {
     if (this._currentTextIndex < this._textArray.length) {
       this._moveButtonRandomly();
@@ -154,6 +183,7 @@ class HoverButton extends HTMLElement {
     );
   }
 
+  // random movement
   _moveButtonRandomly() {
     const maxX = window.innerWidth - this._button.offsetWidth;
     const maxY = window.innerHeight - this._button.offsetHeight;
@@ -169,6 +199,7 @@ class HoverButton extends HTMLElement {
     return [];
   }
 
+  // reset button
   resetButton() {
     this._button.style.transform = "scale(1)";
     this._button.style.fontSize = "18px";
@@ -177,6 +208,7 @@ class HoverButton extends HTMLElement {
     this._button.classList.remove("rainbow-text");
   }
 
+  // fun functions
   enlargeButton() {
     this._button.style.transform = "scale(2.5)";
     this._button.style.fontSize = "44px";
@@ -191,6 +223,41 @@ class HoverButton extends HTMLElement {
     this._button.classList.add("rainbow-text");
   }
 
+  fillScreenWithFakeButtons() {
+    this._shadowRoot
+      .querySelectorAll(".fake-button")
+      .forEach((btn) => btn.remove());
+
+    const numberOfButtons =
+      Math.floor(window.innerWidth / 100) * Math.floor(window.innerHeight / 50);
+
+    for (let i = 0; i < numberOfButtons; i++) {
+      const fakeButton = document.createElement("button");
+      fakeButton.textContent = "Click me";
+      fakeButton.className = "fake-button";
+      fakeButton.style.position = "absolute";
+      fakeButton.style.left = `${Math.random() * window.innerWidth}px`;
+      fakeButton.style.top = `${Math.random() * window.innerHeight}px`;
+      fakeButton.style.background = "#3498db";
+      fakeButton.style.color = "#fff";
+      fakeButton.style.border = "none";
+      fakeButton.style.padding = "10px 20px";
+      fakeButton.style.borderRadius = "5px";
+      fakeButton.style.fontSize = "18px";
+
+      this._shadowRoot.appendChild(fakeButton);
+    }
+
+    this._moveButtonRandomly();
+  }
+
+  removeAllFakeButtons() {
+    this._shadowRoot
+      .querySelectorAll(".fake-button")
+      .forEach((btn) => btn.remove());
+  }
+
+  // boring functions
   attributeChangedCallback(name, oldValue, newValue) {}
 
   connectedCallback() {}
