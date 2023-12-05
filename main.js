@@ -12,6 +12,7 @@ template.innerHTML = `
       font-size: 18px;
       border-radius: 5px;
       position: absolute;
+      z-index: 9999;
     }
 
     .hover-button.clicked {
