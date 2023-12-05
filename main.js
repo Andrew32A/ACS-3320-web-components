@@ -31,6 +31,21 @@ template.innerHTML = `
     .spinning {
       animation: spin 1s linear infinite;
     }
+
+    @keyframes rainbow {
+      0% { color: red; }
+      14% { color: orange; }
+      28% { color: yellow; }
+      42% { color: green; }
+      56% { color: blue; }
+      70% { color: indigo; }
+      84% { color: violet; }
+      100% { color: red; }
+    }
+
+    .rainbow-text {
+      animation: rainbow 2s linear infinite;
+    }
   </style>
   <button class="hover-button">Click me</button>
 `;
@@ -58,6 +73,11 @@ class HoverButton extends HTMLElement {
       "Uh oh",
       "How about this?",
       "8========================D",
+      "Hmm...",
+      "That sucks",
+      "Wanna hear a joke instead?",
+      "What's the difference between a snowman and a snowwoman?",
+      "Snowballs",
       "",
     ];
 
@@ -69,34 +89,46 @@ class HoverButton extends HTMLElement {
 
   _handleIndexCases() {
     switch (this._currentTextIndex) {
-      case 0:
+      case 0: // too slow
         break;
-      case 1:
+      case 1: // try again
         break;
-      case 2:
+      case 2: // you can do it
         break;
-      case 3:
+      case 3: // i believe in you
         break;
-      case 4:
+      case 4: // you're almost there
         break;
-      case 5:
+      case 5: // keep going
         break;
-      case 6:
+      case 6: // okay okay
         break;
-      case 7:
+      case 7: // i'll make it easier
         break;
-      case 8:
+      case 8: // eggplant
         this.enlargeButton();
         break;
-      case 9:
+      case 9: // uh oh
         this.resetButton();
         break;
-      case 10:
+      case 10: // how about this?
         break;
-      case 11:
+      case 11: // 8========================D
         this.startSpinning();
         break;
-      case 12:
+      case 12: // hmm...
+        this.resetButton();
+        break;
+      case 13: // that sucks
+        break;
+      case 14: // wanna hear a joke instead?
+        break;
+      case 15: // what's the difference between a snowman and a snowwoman?
+        break;
+      case 16: // snowballs
+        this.startRainbowEffect();
+        break;
+      case 17: //
         this.resetButton();
       default:
         break;
@@ -142,6 +174,7 @@ class HoverButton extends HTMLElement {
     this._button.style.fontSize = "18px";
     this._button.style.padding = "10px 20px";
     this._button.classList.remove("spinning");
+    this._button.classList.remove("rainbow-text");
   }
 
   enlargeButton() {
@@ -152,6 +185,10 @@ class HoverButton extends HTMLElement {
 
   startSpinning() {
     this._button.classList.add("spinning");
+  }
+
+  startRainbowEffect() {
+    this._button.classList.add("rainbow-text");
   }
 
   attributeChangedCallback(name, oldValue, newValue) {}
