@@ -40,13 +40,22 @@ class HoverButton extends HTMLElement {
     this._shadowRoot.appendChild(tempNode);
 
     this._button = this._shadowRoot.querySelector(".hover-button");
+    this._currentTextIndex = 0;
     this._textArray = [
       "Too slow",
+      "Try again",
+      "You can do it",
+      "I believe in you",
+      "You're almost there",
+      "Keep going",
       "Okay okay",
       "I'll make it easier",
-      "Click me",
+      "🍆",
+      "Uh oh",
+      "How about this?",
+      "🍆🍆🍆🍆🍆🍆",
+      "",
     ];
-    this._currentTextIndex = 0;
 
     this._button.addEventListener(
       "mouseenter",
@@ -54,16 +63,54 @@ class HoverButton extends HTMLElement {
     );
   }
 
+  _handleIndexCases() {
+    switch (this._currentTextIndex) {
+      case 0:
+        break;
+      case 1:
+        break;
+      case 2:
+        break;
+      case 3:
+        break;
+      case 4:
+        break;
+      case 5:
+        break;
+      case 6:
+        break;
+      case 7:
+        break;
+      case 8:
+        this.enlargeButton();
+        break;
+      case 9:
+        this.resetButtonSize();
+        break;
+      case 10:
+        break;
+      default:
+        break;
+    }
+  }
+
   _handleMouseEnter() {
     if (this._currentTextIndex < this._textArray.length) {
       this._moveButtonRandomly();
       this._button.textContent = this._textArray[this._currentTextIndex];
+      this._handleIndexCases();
       this._currentTextIndex++;
 
       if (this._currentTextIndex === this._textArray.length) {
         this._button.classList.add("hidden");
       }
     }
+
+    // debugging
+    console.log(
+      "Current Index:",
+      this._currentTextIndex + " ----- Text: " + this._button.textContent
+    );
   }
 
   _moveButtonRandomly() {
@@ -79,6 +126,18 @@ class HoverButton extends HTMLElement {
 
   static get observedAttributes() {
     return [];
+  }
+
+  enlargeButton() {
+    this._button.style.transform = "scale(2.5)";
+    this._button.style.fontSize = "44px";
+    this._button.style.padding = "15px 25px";
+  }
+
+  resetButtonSize() {
+    this._button.style.transform = "scale(1)";
+    this._button.style.fontSize = "18px";
+    this._button.style.padding = "10px 20px";
   }
 
   attributeChangedCallback(name, oldValue, newValue) {}
